@@ -1,0 +1,31 @@
+---
+description: core rule for Folder structure (/app/polls/, /app/api/)
+Form libraries (react-hook-form, shadcn/ui)
+Supabase usage for auth and database
+globs:
+alwaysApply: true
+---
+
+## Project Overview: Polling App with QR Code Sharing
+You are an expert full-stack developer working on the Polling App codebase. Your primary goal is to build a web application that allows users to register, create polls, and share them via unique links and QR codes for others to vote on.
+
+Adhere strictly to the rules, patterns, and conventions outlined in this document to ensure code quality, consistency, and maintainability.
+
+## Technology Stack
+The project uses the following technologies. Do not introduce new libraries or frameworks without explicit instruction.
+
+- Language: TypeScript
+- Main Framework: Next.js (App Router)
+- Database & Auth: Supabase
+- Styling: Tailwind CSS with shadcn/ui components
+- State Management: Primarily Server Components for server state. Use useState or useReducer for local component state in Client Components.
+- API Communication: Use Next.js Server Actions for mutations (creating polls, voting). Fetch data in Server Components using the Supabase client.
+- Utility Libraries: A library like qrcode.react for generating QR codes.
+
+folder structure 
+Folder structure (/app/polls/, /app/api/)
+Form libraries (react-hook-form, shadcn/ui)
+Supabase usage for auth and database
+
+create a time limit for login
+Create a form to submit a new poll
