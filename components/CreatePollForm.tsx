@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPoll } from '@/lib/actions'; // Import the Server Action
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,18 +21,12 @@ export function CreatePollForm() {
 
     const formData = new FormData(event.currentTarget);
     
-    const response = await fetch('/api/polls', {
-      method: 'POST',
-      body: formData,
-    });
+    const result = await createPoll(formData); // Call the Server Action directly
 
-    const result = await response.json();
-
-    if (!response.ok) {
-      setError(result.error);
-    } else {
-      window.location.href = `/polls/${result.id}`;
-    }
+    if (result?.error) {
+      setError(result.error); // Set error if the Server Action returns an error
+    } 
+    // Redirection is handled by the createPoll Server Action on success, so no else block needed here.
 
     setIsSubmitting(false);
   };
