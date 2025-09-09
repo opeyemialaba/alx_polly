@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { createPoll } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,11 +19,20 @@ export function CreatePollForm() {
     setError(null);
 
     const formData = new FormData(event.currentTarget);
-    const result = await createPoll(formData);
+    
+    const response = await fetch('/api/polls', {
+      method: 'POST',
+      body: formData,
+    });
 
-    if (result?.error) {
+    const result = await response.json();
+
+    if (!response.ok) {
       setError(result.error);
+    } else {
+      window.location.href = `/polls/${result.id}`;
     }
+
     setIsSubmitting(false);
   };
 

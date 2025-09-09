@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Poll } from '@/lib/types'; // Import the Poll type from lib/types.ts
-import { voteOnPoll } from '@/lib/actions'; // Import the Server Action for voting
 
 // Temporarily using dummy data for a single poll.
 // In a real application, this data would be fetched from Supabase based on the poll ID.
@@ -84,17 +83,20 @@ export default function SinglePollPage({ params }: { params: { id: string } }) {
       }
 
       const formData = new FormData();
-      formData.append('pollId', poll.id);
       formData.append('optionIndex', optionIndex.toString());
 
-      // Call the Server Action to record the vote.
-      const result = await voteOnPoll(formData);
+      const response = await fetch(`/api/polls/${poll.id}/vote`, {
+        method: 'POST',
+        body: formData,
+      });
 
-      if (result?.error) {
+      const result = await response.json();
+
+      if (!response.ok) {
         alert(`Error voting: ${result.error}`); // Display error to the user.
       } else {
         alert(`Voted for: ${selectedOption}`); // Confirm successful vote.
-        // In a real app, you might want to optimistically update the UI or re-fetch poll data.
+        router.refresh();
       }
     } else {
       alert('Please select an option to vote.'); // Alert if no option is selected.
